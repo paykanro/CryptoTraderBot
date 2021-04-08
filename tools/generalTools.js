@@ -7,7 +7,7 @@ generalTools.request = (method,url,headers,body) => {
     return new Promise((resolve, reject) => {
         unirest(method,url,headers,body,function (res) { 
         if (res.error) return reject(res.error); 
-        if(res) return resolve(res);
+        if(res) return resolve(res.toJSON());
     });
     })
 };
@@ -33,12 +33,12 @@ generalTools.authorizationStringGenerator = (urlParamsOrObject) => {
     switch(typeof urlParamsOrObject){
         case 'object':
             urlParamsOrObject.access_id = process.env.Access_ID;
-            urlParamsOrObject = this.sortObjectByKeys(urlParamsOrObject);
+            urlParamsOrObject = generalTools.sortObjectByKeys(urlParamsOrObject);
             urlParamsOrObject.secret_key = process.env.Secret_Key;
             break;
         case 'string':
             urlParamsOrObject = process.env.Access_ID + '&' + urlParamsOrObject;
-            urlParamsOrObject = this.sortURLParams(urlParamsOrObject);
+            urlParamsOrObject = generalTools.sortURLParams(urlParamsOrObject);
             urlParamsOrObject = urlParamsOrObject + '&' + process.env.Secret_Key;
             break;
         default:
