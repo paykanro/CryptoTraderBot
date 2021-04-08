@@ -1,6 +1,6 @@
 let md5 = require('md5');
 const commonAPI = require('../coinexModules/commonAPI');
-const marketAPI = require('../coinexModules/marketAPI');
+const accountAPI = require('../coinexModules/accountAPI');
 
 let gt = require('../tools/generalTools');
 // let a = md5('asdfghjklqwertyuiopzxcvbnm,asdfghjklqwertyuiodfvgbxcvbcxvbcvxbxcvbcxvbdfghsdyhservcbxc6h5n41rt4y89erhg5441564156y1hhdf$%^$%^!#$%@#^$@#5651546154');
@@ -17,6 +17,6 @@ let gt = require('../tools/generalTools');
   
 //   console.log(gt.sortURLParams('c=4&a=2&b=3&a=1'));
 async function  test1() {
-    console.log(await marketAPI.acquireMarketList('TRX'));
+    console.log(await accountAPI.inquireAccountBallance());
 };
 test1();

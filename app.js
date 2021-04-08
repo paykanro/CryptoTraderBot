@@ -10,11 +10,6 @@ var app = express();
 
 //defining environment variables
 process.env.COINEX_ROOT_ADDRESS = 'https://api.coinex.com/v1/';
-process.env.COINEX_GENERAL_HEADER = {
-    'Accept': 'application/json',
-    'Content-Type':'application/json',
-    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36'
-};
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

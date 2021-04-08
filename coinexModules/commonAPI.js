@@ -1,5 +1,4 @@
 const generalTools = require('../tools/generalTools');
-const unirest = require('unirest');
 
 const commonAPI = {};
 

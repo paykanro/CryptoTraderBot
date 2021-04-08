@@ -2,6 +2,11 @@ const unirest = require('unirest');
 let md5 = require('md5');
 
 const generalTools = {};
+generalTools.coinexGeneralHeader = {
+    'Accept': 'application/json',
+    'Content-Type':'application/json',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36'
+};
 
 generalTools.request = (method,url,headers,body) => {
     return new Promise((resolve, reject) => {
@@ -29,22 +34,22 @@ generalTools.sortURLParams = (unorderedParamsString) => {
     return searchParams.toString();
 };
 
-generalTools.authorizationStringGenerator = (urlParamsOrObject) => {
+generalTools.authorizationStringGenerator = async (urlParamsOrObject) => {
     switch(typeof urlParamsOrObject){
         case 'object':
-            urlParamsOrObject.access_id = process.env.Access_ID;
             urlParamsOrObject = generalTools.sortObjectByKeys(urlParamsOrObject);
             urlParamsOrObject.secret_key = process.env.Secret_Key;
             break;
         case 'string':
-            urlParamsOrObject = process.env.Access_ID + '&' + urlParamsOrObject;
             urlParamsOrObject = generalTools.sortURLParams(urlParamsOrObject);
-            urlParamsOrObject = urlParamsOrObject + '&' + process.env.Secret_Key;
+            urlParamsOrObject = urlParamsOrObject + '&secret_key=' + process.env.Secret_Key;
             break;
         default:
-            return 'error';
+            throw {error: 'undefined type'};
     }
-    return md5(urlParamsOrObject);
+    let generatedSignature = md5(urlParamsOrObject);
+    generatedSignature = generatedSignature.toUpperCase();
+    return  generatedSignature;
 };
 
 module.exports = generalTools;
